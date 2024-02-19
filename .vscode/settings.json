@@ -59,6 +59,7 @@
   "files.associations": {
     "stdlib.h": "c",
     "user_mgr.h": "c",
-    "time.h": "c"
+    "time.h": "c",
+    "unistd.h": "c"
   }
 }

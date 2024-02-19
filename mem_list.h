@@ -9,7 +9,7 @@ typedef struct user_list
     int uid;
     char uname[20];              //会员名
     char phone[12];             //会员手机号
-    char upass[31];            //会员卡密码
+    char upass[100];            //会员卡密码
     int user_type;          //0-普通会员 1-高级会员
     int number;                 //剩余体验次数
     int delete_flag;            //删除标志

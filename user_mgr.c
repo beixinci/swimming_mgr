@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "user_mgr.h"
 #include "md5.h"
+#include "sha.h"
 int member_id =0;
 
 
@@ -58,7 +59,7 @@ int check_user(const char* phone)
 void create_user(void)
 {
     user_info ui;
-    
+  
     while(1)
     {
         printf("\n手机号：");
@@ -70,16 +71,27 @@ void create_user(void)
   
    }
 
-    //char password[51] ;
+  /*
 
-    //printf("\n手机号：");
-    //scanf("%s", ui.phone);
+    printf("\n手机号：");
+    scanf("%s", ui.phone);
+*/
+
     char * passwd= getpass("密码:");
 
+
+  /*
+    sha1算法测试
+    unsigned char input[]="666",output[40]={0};
+	sha1(input,strlen((char*)input),output);
+	printf("%s\n",output);
+    */
  
  //   md5_string(password, passwd);
 
-    md5_string(passwd,ui.upass);
+  //  md5_string(passwd,ui.upass);
+
+    sha1(passwd,strlen((char*)passwd),ui.upass);
     printf("用户名:");
     scanf("%s", ui.uname);
     getchar();
@@ -108,7 +120,7 @@ void create_mem(void)
 {
     //static int uid = 1;
     elem_type ui;
-    char passwd[51];
+    //char passwd[51];
 
     while(1)
     {
@@ -125,11 +137,12 @@ void create_mem(void)
 
     //uid++;
 
-    char *password = getpass("\n密码:");
+    char *passwd = getpass("\n密码:");
 
  
-    md5_string(password,ui.upass);
+    //md5_string(password,ui.upass);
 
+    sha1(passwd,strlen((char*)passwd),ui.upass);
     printf("用户名:");
     scanf("%s", ui.uname);
 
@@ -170,7 +183,7 @@ void create_mem(void)
 // 登录验证
 int login_auth(void)
 {
-    char phone[12], upass[33], upass_md5[33];
+    char phone[12], upass[100], upass_md5[33];
 
     printf("\n登录\n");
     printf("手机号：");
@@ -178,8 +191,9 @@ int login_auth(void)
 
     char * passwd = getpass("密码：");
 
-    md5_string(passwd,upass);
+    //md5_string(passwd,upass);
 
+    sha1(passwd,strlen((char*)passwd),upass);
     FILE* fp = fopen(USER_INFO_FILE, "rb");
 
     user_info ui;

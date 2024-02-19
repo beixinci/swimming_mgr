@@ -12,7 +12,7 @@
 typedef struct
 {
     char uname[51];
-    char upass[33];
+    char upass[100];
     char phone[12];
     int delete_flag;
     

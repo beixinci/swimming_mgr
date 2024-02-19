@@ -1,6 +1,8 @@
 #include<stdio.h>
+#include<string.h>
 #include<unistd.h>
 #include "md5.h"
+#include "sha.h"
 #include "mem_list.h"
 #include "user_mgr.h"
 
@@ -25,14 +27,15 @@ int main()
 {
     int result;
 /*
-	FILE *fp = fopen(MEM_INFO_FILE,"wb");
+FILE *fp = fopen(MEM_INFO_FILE,"wb");
 
 	fclose(fp);
 		
-*/
 
-//	create_user();
-	
+
+	create_user();
+	*/
+
     if(access(USER_INFO_FILE,R_OK) == 0)
         result = login_auth();
 
@@ -259,7 +262,8 @@ void update_mem(void)
         else break;
      }
     char * passwd = getpass("密码:");
-    md5_string(passwd,pg->upass);
+    //md5_string(passwd,pg->upass);
+	sha1(passwd,strlen((char*)passwd),pg->upass);
 
     printf("剩余体验次数：");
     scanf("%d",&(pg->number));
@@ -294,8 +298,8 @@ void update_mem1(void)
 	scanf("%s",pg->uname);
 	char * passwd = getpass("密码");
 
-	md5_string(passwd,pg->upass);
-
+	//md5_string(passwd,pg->upass);
+	sha1(passwd,strlen((char*)passwd),pg->upass);
 	fseek(fp, pos * sizeof(struct user_list), SEEK_SET);
 	fwrite(pg, sizeof(struct user_list), 1, fp);
 
@@ -316,7 +320,7 @@ int show_mem(struct user_list* g)
         printf("%s  ",g->phone);
         printf("  %s  ",g->user_type?"高级会员":"普通会员");
         printf("    %d  ",g->number);
-        printf("\n");
+        printf("\n---------------------------------------------\n");
     }
 }
 
@@ -326,6 +330,6 @@ void search_mem(void)
     printf("卡号    	姓名    手机号    会员等级    剩余次数\n");
 	printf("---------------------------------------------\n");
 	traverse(gl, show_mem);
-	printf("---------------------------------------------\n");
+	
 
 }
