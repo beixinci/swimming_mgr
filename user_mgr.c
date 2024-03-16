@@ -3,14 +3,17 @@
 #include <string.h>
 #include <unistd.h>
 #include "user_mgr.h"
-#include "md5.h"
 #include "sha.h"
-int member_id =0;
+int member_id =0,result = 0;
+
 
 
 // 判断用户是否存在
 int check_user(const char* phone)
 {
+    if(result == 0)
+        return 0;
+
     FILE* fp = fopen(USER_INFO_FILE, "rb");
 
     if(NULL == fp) return 1;
@@ -65,34 +68,29 @@ void create_user(void)
         printf("\n手机号：");
         scanf("%s", ui.phone);
 
-       if(check_user(ui.phone)==1 || check_user(ui.phone) == 2)
-            printf("\n用户已存在，请重新输入！\n");
+       int ret =  check_user(ui.phone);
+       if(ret == 1)
+       {
+        printf("管理员已存在\n");
+       }
+       if(ret == 2)
+       {
+        printf("会员已存在\n");
+       }
+           
+            
         else break;
   
    }
 
-  /*
-
-    printf("\n手机号：");
-    scanf("%s", ui.phone);
-*/
-
-    char * passwd= getpass("密码:");
+  
+    char * passwd= getpass("\n密码:");
 
 
-  /*
-    sha1算法测试
-    unsigned char input[]="666",output[40]={0};
-	sha1(input,strlen((char*)input),output);
-	printf("%s\n",output);
-    */
- 
- //   md5_string(password, passwd);
 
-  //  md5_string(passwd,ui.upass);
 
     sha1(passwd,strlen((char*)passwd),ui.upass);
-    printf("用户名:");
+    printf("\n用户名:");
     scanf("%s", ui.uname);
     getchar();
 
@@ -143,14 +141,14 @@ void create_mem(void)
     //md5_string(password,ui.upass);
 
     sha1(passwd,strlen((char*)passwd),ui.upass);
-    printf("用户名:");
+    printf("\n用户名:");
     scanf("%s", ui.uname);
 
     ui.delete_flag = 0;
 
     char user_type[20];
 
-    printf("会员类型：");
+    printf("\n会员类型：");
     scanf("%s",user_type);
 
     if(strcmp(user_type,"高级会员")==0)

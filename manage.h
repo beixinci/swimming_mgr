@@ -4,7 +4,6 @@
 #include<stdio.h>
 #include<string.h>
 #include<unistd.h>
-#include "md5.h"
 #include "sha.h"
 #include "mem_list.h"
 #include "user_mgr.h"
@@ -21,5 +20,7 @@ void search_mem(void);
 void update_mem1(void);
 
 extern int member_id;
+extern int result;
+
 
 #endif
