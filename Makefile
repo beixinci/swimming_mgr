@@ -17,5 +17,4 @@ user_mgr.o:user_mgr.c
 	gcc -c user_mgr.c
 
 clean:
-	rm -rf *.o swim_mgr 
-	rm mem_info_dat user_info.dat
+	rm -rf *.o swim_mgr *dat
